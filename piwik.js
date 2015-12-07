@@ -21,12 +21,12 @@ var defaults = {
 
 
 // HTTP GET
-function talk (props) {
+function talk (props, headers) {
   var key;
   var options = {
     url: app.settings.baseURL + (props.path || ''),
     method: props.method || 'GET',
-    headers: {},
+    headers: headers || {},
     timeout: parseInt (props.timeout || app.settings.timeout || defaults.timeout, 10)
   };
 
@@ -116,7 +116,7 @@ app.api = function (vars, cb) {
 };
 
 // Track
-app.track = function (vars, cb) {
+app.track = function (vars, cb, headers) {
   var bulk = {
     requests: []
   };
@@ -170,7 +170,7 @@ app.track = function (vars, cb) {
         cb && cb (error);
       }
     }
-  });
+  }, headers);
 
   return app;
 };
